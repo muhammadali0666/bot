@@ -5,6 +5,7 @@ const token = '5982539743:AAGz4bKljIPFZTlun3OFEJBRWKxRJ7AArgY';
 const bot = new TelegramBot(token, {polling: true});
 
 const bootstrap = () => {
+try{
   bot.setMyCommands([
     {
       command: "/start",
@@ -19,7 +20,14 @@ const bootstrap = () => {
     if(text === "/start"){
       bot.sendMessage(chatId, `Assalomu Aleykum ${msg.from?.first_name} siz Muhammadalini botiga kirdingiz!`)
     }
+    if(text === "/s"){
+      bot.sendMessage(chatId, `Assalomu Aleykum ${msg.from?.first_name}`)
+    }
   });
+}
+catch(err){
+  console.log(err.message);
+}
 }
 
 bootstrap()
