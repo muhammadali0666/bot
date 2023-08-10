@@ -1,33 +1,41 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-const token = '5982539743:AAGz4bKljIPFZTlun3OFEJBRWKxRJ7AArgY';
+const token = '6377747448:AAEenQWgYfTIZZ--CkGaRcaY-BiqqWIxlh0';
 
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, { polling: true });
 
-const bootstrap = () => {
-try{
   bot.setMyCommands([
     {
       command: "/start",
       description: "botni ishga tushirish"
+    },
+    {
+      command: "/info",
+      description: "men haqimda ma'lumot"
     }
   ])
-  
-  bot.on('message', (msg) => {
+
+  bot.on('message', async (msg) => {
     const text = msg.text
     const chatId = msg.chat.id;
-  
-    if(text === "/start"){
-      bot.sendMessage(chatId, `Assalomu Aleykum ${msg.from?.first_name} siz Muhammadalini botiga kirdingiz!`)
+
+    if (text === "/start") {
+      await bot.sendMessage(chatId, `Assalomu Aleykum ${msg.from?.first_name} siz Muhammadalini botiga kirdingiz!`)
     }
-    if(text === "/s"){
-      bot.sendMessage(chatId, `Assalomu Aleykum ${msg.from?.first_name}`)
+    if (text === "/info") {
+      await bot.sendPhoto(chatId, "https://muhammadalishuhratjonov.netlify.app/img/my.jpg", {
+        reply_markup: {
+          keyboard: [
+            [
+              {
+              text: "siteni ko'rish",
+              web_app: {
+                url: "https://muhammadalishuhratjonov.netlify.app/"
+              }
+            }
+          ]
+          ]
+        }
+      })
     }
   });
-}
-catch(err){
-  console.log(err.message);
-}
-}
-
-bootstrap()
